@@ -5,8 +5,15 @@ node_modules/
 *.blf
 *.regtrans-ms
 *.ini
+
+# Ignora todas las carpetas por defecto
 */
+
+# Exceptúa la carpeta src y todo lo que tiene dentro
 !src/
+!src/**
+
+# Exceptúa también los archivos principales del proyecto
 !docker-compose.yml
 !package.json
 !package-lock.json
