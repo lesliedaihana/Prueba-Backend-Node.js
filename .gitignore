@@ -1,0 +1,12 @@
+node_modules/
+*.log
+*.exe
+*.dat
+*.blf
+*.regtrans-ms
+*.ini
+*/
+!src/
+!docker-compose.yml
+!package.json
+!package-lock.json
