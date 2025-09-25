@@ -1,4 +1,4 @@
-const { Lawsuit } = require('../models');
+const { Lawsuit, Lawyer } = require('../models');
 const Joi = require('joi');
 
 const lawsuitSchema = Joi.object({
@@ -37,7 +37,7 @@ exports.getAllLawsuits = async (req, res) => {
     if (status) where.status = status;
     if (lawyer_id) where.lawyer_id = lawyer_id;
 
-    const lawsuits = await Lawsuit.findAll({ where });
+    const lawsuits = await Lawsuit.findAll({ where, include: [{ model: Lawyer, as: 'lawyer' }] });
     res.json(lawsuits);
   } catch (error) {
     res.status(500).json({ error: error.message });

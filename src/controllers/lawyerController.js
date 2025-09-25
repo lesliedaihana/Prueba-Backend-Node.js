@@ -1,5 +1,5 @@
 const { Lawyer } = require('../models');
-const Joi = require('joi') 
+const Joi = require('joi');
 
 const lawyerSchema = Joi.object({
   name: Joi.string().min(2).max(100).required().messages({
@@ -31,7 +31,7 @@ exports.getAllLawyers = async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query;
     const offset = (page - 1) * limit;
-    const lawyers = await Lawyer.findAndCountAll({ limit, offset });
+    const lawyers = await Lawyer.findAndCountAll({ limit: parseInt(limit), offset: parseInt(offset) });
     res.json({
       total: lawyers.count,
       page: parseInt(page),
