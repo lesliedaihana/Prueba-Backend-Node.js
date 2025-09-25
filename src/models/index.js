@@ -31,6 +31,14 @@ fs
     db[model.name] = model;
   });
 
+// Definición de asociaciones
+db.Lawyer.associate = function(models) {
+  db.Lawyer.hasMany(models.Lawsuit, { foreignKey: 'lawyer_id', as: 'lawsuits' });
+};
+db.Lawsuit.associate = function(models) {
+  db.Lawsuit.belongsTo(models.Lawyer, { foreignKey: 'lawyer_id', as: 'lawyer' });
+};
+
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);

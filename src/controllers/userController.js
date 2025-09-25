@@ -2,12 +2,36 @@ const { User } = require('../models');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
-const secret = '123'; 
+const secret = 'daihana'; // Cambia esto por una clave segura
 
+// Esquema de validación para crear usuario
 const userSchema = Joi.object({
-  username: Joi.string().min(3).max(30).required(),
-  password: Joi.string().min(6).required(),
-  role: Joi.string().valid('admin', 'operator').required()
+  username: Joi.string().min(3).max(30).required().messages({
+    'string.min': '"username" must be at least 3 characters long',
+    'string.max': '"username" must be less than or equal to 30 characters long',
+    'any.required': '"username" is required'
+  }),
+  password: Joi.string().min(6).required().messages({
+    'string.min': '"password" must be at least 6 characters long',
+    'any.required': '"password" is required'
+  }),
+  role: Joi.string().valid('admin', 'operator').required().messages({
+    'any.only': '"role" must be one of [admin, operator]',
+    'any.required': '"role" is required'
+  })
+});
+
+// Esquema de validación para login
+const loginSchema = Joi.object({
+  username: Joi.string().min(3).max(30).required().messages({
+    'string.min': '"username" must be at least 3 characters long',
+    'string.max': '"username" must be less than or equal to 30 characters long',
+    'any.required': '"username" is required'
+  }),
+  password: Joi.string().min(6).required().messages({
+    'string.min': '"password" must be at least 6 characters long',
+    'any.required': '"password" is required'
+  })
 });
 
 exports.getAllUsers = async (req, res) => {
@@ -21,8 +45,8 @@ exports.getAllUsers = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   try {
-    const { error } = userSchema.validate(req.body);
-    if (error) return res.status(400).json({ error: error.details[0].message });
+    const { error } = userSchema.validate(req.body, { abortEarly: false });
+    if (error) return res.status(400).json({ error: error.details.map(d => d.message) });
 
     const { username, password, role } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -36,11 +60,8 @@ exports.createUser = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const { error } = Joi.object({
-      username: Joi.string().min(3).max(30).required(),
-      password: Joi.string().min(6).required()
-    }).validate(req.body);
-    if (error) return res.status(400).json({ error: error.details[0].message });
+    const { error } = loginSchema.validate(req.body, { abortEarly: false });
+    if (error) return res.status(400).json({ error: error.details.map(d => d.message) });
 
     const { username, password } = req.body;
     const user = await User.findOne({ where: { username } });
