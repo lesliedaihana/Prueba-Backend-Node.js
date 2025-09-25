@@ -2,7 +2,7 @@ const { User } = require('../models');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
-const secret = 'daihana'; // Cambia esto por una clave segura
+const secret = 'daihana'; 
 
 // Esquema de validación para crear usuario
 const userSchema = Joi.object({

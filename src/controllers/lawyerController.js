@@ -1,5 +1,5 @@
 const { Lawyer } = require('../models');
-const Joi = require('joi'); // Agrega esta línea
+const Joi = require('joi') 
 
 const lawyerSchema = Joi.object({
   name: Joi.string().min(2).max(100).required().messages({

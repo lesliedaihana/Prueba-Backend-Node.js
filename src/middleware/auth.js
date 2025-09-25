@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secret = 'daihana'; // Debe coincidir con el de userController.js (cámbialo por una clave segura en producción)
+const secret = 'daihana'; 
 
 const authMiddleware = (req, res, next) => {
   const token = req.headers['authorization']?.split(' ')[1];

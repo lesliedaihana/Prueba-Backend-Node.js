@@ -3,7 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const lawyerController = require('../controllers/lawyerController');
 const lawsuitController = require('../controllers/lawsuitController');
-const authMiddleware = require('../middleware/auth'); // Esta línea es correcta
+const authMiddleware = require('../middleware/auth'); 
 
 // Rutas para autenticación
 router.post('/login', userController.login);

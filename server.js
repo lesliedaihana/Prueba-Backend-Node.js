@@ -18,4 +18,10 @@ sequelize.sync({ force: false }).then(() => {
   console.error('Unable to connect to the database:', err);
 });
 
+// Middleware de errores centralizado
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something went wrong!' });
+});
+
 module.exports = app;
