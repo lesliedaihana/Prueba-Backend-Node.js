@@ -3,7 +3,21 @@
     "username": "postgres",
     "password": "password",
     "database": "legalsuite",
-    "host": "localhost",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "password",
+    "database": "test_legalsuite",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "password",
+    "database": "prod_legalsuite",
+    "host": "127.0.0.1",
     "dialect": "postgres"
   }
 }

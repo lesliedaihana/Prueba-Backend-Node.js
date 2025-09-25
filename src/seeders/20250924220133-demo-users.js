@@ -1,12 +1,17 @@
 'use strict';
-const { v4: uuidv4 } = require('uuid'); // Asegúrate de instalar uuid con `npm install uuid`
+const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcryptjs');
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    const hashedAdminPassword = await bcrypt.hash('admin123', 10);
+    const hashedOperatorPassword = await bcrypt.hash('operator123', 10);
+
     await queryInterface.bulkInsert('Users', [
       {
         id: uuidv4(),
         username: 'admin_user',
-        password: 'admin123', // Hashearás esto más adelante con bcrypt
+        password: hashedAdminPassword,
         role: 'admin',
         created_at: new Date(),
         updated_at: new Date()
@@ -14,7 +19,7 @@ module.exports = {
       {
         id: uuidv4(),
         username: 'operator_user',
-        password: 'operator123',
+        password: hashedOperatorPassword,
         role: 'operator',
         created_at: new Date(),
         updated_at: new Date()

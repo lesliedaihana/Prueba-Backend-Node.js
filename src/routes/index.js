@@ -1,4 +1,3 @@
- 
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
@@ -8,6 +7,7 @@ const lawsuitController = require('../controllers/lawsuitController');
 // Rutas para Users
 router.get('/users', userController.getAllUsers);
 router.post('/users', userController.createUser);
+router.post('/login', userController.login);
 
 // Rutas para Lawyers
 router.get('/lawyers', lawyerController.getAllLawyers);
